@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <>
-      <main className="@container">
+      <main className="@container bg-slate-100">
         <Header />
         <Stats />
         <Outlet />
