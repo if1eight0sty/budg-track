@@ -1,5 +1,5 @@
+import Table from "../budget/table/table";
 import Search from "./components/search/search";
-import Table from "./components/table/table";
 
 const Home = () => {
   return (

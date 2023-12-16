@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import TableHeading from "./components/table-heading";
 import TablePagination from "./components/table-pagination";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchStore } from "../search/store";
+import { useSearchStore } from "../../home/components/search/store";
 const Table = () => {
   const data = useMemo(
     () => [

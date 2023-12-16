@@ -10,16 +10,33 @@ const Header = () => {
           </span>
           <ul className="flex gap-x-3 font-semibold uppercase text-[.95rem]">
             <li>
-              <Link to="/">Dashboard</Link>
+              <Link to="/" className="outline-none">
+                Dashboard
+              </Link>
             </li>
             <li>Budget</li>
           </ul>
-          <span
-            className="border rounded-full cursor-pointer select-none border-[#2e2e2e] p-[3px]"
-            title="View profile"
-          >
-            <Icon icon="memory:user" width={20} />
-          </span>
+          <div className="border rounded-full border-[#2e2e2e] p-[3px] group relative">
+            <span title="Account" className="cursor-pointer select-none">
+              <Icon icon="memory:user" width={20} />
+            </span>
+            <div className="absolute top-5 right-0 group-hover:block hover:block w-[7em] border-r border-l border-b rounded-sm hidden">
+              <ul className="bg-white mt-3 px-3 pb-3 grid gap-1">
+                <li>
+                  <Link to="/">Profile</Link>
+                </li>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link to="/register">Register</Link>
+                </li>
+                <li>
+                  <p className="cursor-pointer">Settings</p>
+                </li>
+              </ul>
+            </div>
+          </div>
         </nav>
       </header>
     </>
