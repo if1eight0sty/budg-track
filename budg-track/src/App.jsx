@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+const AddBudget = lazy(() => import("./pages/budget/add-budget/add-budget"));
 const Loader = lazy(() => import("./components/loader"));
 const Layout = lazy(() => import("./layout/layout"));
 const Home = lazy(() => import("./pages/home/home"));
@@ -15,6 +16,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Layout />}>
             <Route path="" element={<Home />} />
+            <Route path="add-budget" element={<AddBudget />} />
           </Route>
         </Routes>
       </Suspense>

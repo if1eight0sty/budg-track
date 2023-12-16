@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import InputField from "../../components/input-field";
 import { AuthHelper } from "./helper";
 import { useAuthStore } from "./store";
+import InputField from "../../components/input-fields/input-field";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ const Register = () => {
               </div>
               <button
                 type="submit"
-                className="w-full px-4 py-2 mt-8 text-lg font-semibold text-white rounded bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-r hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 hover:shadow-lg"
+                className="w-full px-4 py-2 mt-8 text-lg font-semibold text-white rounded bg-[#2e2e2e] hover:shadow-lg"
                 onClick={handleOnSubmit}
               >
                 Register
