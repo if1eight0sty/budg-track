@@ -1,7 +1,7 @@
 const FilterFields = () => {
   return (
     <>
-      <div className="my-5 grid gap-3 md:grid-cols-3">
+      <div className="mt-5 mb-3 grid gap-3 md:grid-cols-3">
         <div className="bg-white text-[#2e2e2e]/70 p-2  rounded">
           <p htmlFor="from" className="font-semibold">
             Date Range
