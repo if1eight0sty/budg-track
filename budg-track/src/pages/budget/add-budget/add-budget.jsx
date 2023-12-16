@@ -6,7 +6,8 @@ import { BudgetHelper } from "../helper";
 
 const AddBudget = () => {
   // classes
-  const budgetClass = useMemo(() => new BudgetHelper(), []);
+  const budgetClass = useMemo(() => new BudgetHelper(), []); // Create an instance of BudgetHelper class using useMemo hook
+
   // stores
   const {
     budgetData: data,
@@ -14,16 +15,19 @@ const AddBudget = () => {
     clearBudgetData: clearData,
     budgetDataError: error,
     setBudgetDataError: setError,
-  } = useBudgetStore();
+  } = useBudgetStore(); // Destructure values from useBudgetStore hook
+
   // handlers
   const handleOnChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value }); // Update the data object with the new value
   };
+
   // handlers for form submit event
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    budgetClass.addBudget(data, setError, clearData);
+    budgetClass.addBudget(data, setError, clearData); // Call the addBudget method of BudgetHelper class with data, setError, and clearData as arguments
   };
+
   return (
     <>
       <div className="px-2 @[30em]:px-6 @[50em]:px-10 @[1300px]:px-16 mb-10">
