@@ -8,8 +8,11 @@ const StatCard = ({ value, title }) => {
           <dt className="text-sm font-medium text-gray-500 truncate">
             {title}
           </dt>
-          <dd className="mt-1 text-3xl font-semibold text-[#2e2e2e]/80">
-            NRs {value}
+          <dd className="mt-1 text-[#2e2e2e]/70">
+            <span className="mr-2 text-xl">NRs</span>
+            <span className="text-3xl font-semibold text-[#2e2e2e]/60">
+              {value}
+            </span>
           </dd>
         </div>
       </div>
