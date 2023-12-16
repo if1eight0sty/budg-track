@@ -23,7 +23,13 @@ export class BudgetHelper {
     setError({});
     const budgets = JSON.parse(localStorage.getItem("budgets")) || [];
     budgets.push(data);
-    localStorage.setItem("budgets", JSON.stringify(budgets));
+    localStorage.setItem(
+      "budgets",
+      JSON.stringify({
+        ...budgets,
+        user: JSON.parse(localStorage.getItem("user")),
+      })
+    );
     clearData();
   };
   getBudgets = () => {
