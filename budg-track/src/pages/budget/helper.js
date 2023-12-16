@@ -26,4 +26,7 @@ export class BudgetHelper {
     localStorage.setItem("budgets", JSON.stringify(budgets));
     clearData();
   };
+  getBudgets = () => {
+    return JSON.parse(localStorage.getItem("budgets")) || [];
+  };
 }

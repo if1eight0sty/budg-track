@@ -47,6 +47,7 @@ const FilterFields = () => {
               onChange={handleOnChange}
               className="border py-[.3rem] px-[.4rem] rounded border-[#2e2e2e]/50 outline-none w-full"
             >
+              <option value="">Select one</option>
               <option value="income">Income</option>
               <option value="expense">Expense</option>
             </select>
@@ -63,6 +64,7 @@ const FilterFields = () => {
               onChange={handleOnChange}
               className="border py-[.3rem] px-[.4rem] rounded border-[#2e2e2e]/50 outline-none w-full"
             >
+              <option value="">Select one</option>
               <option value="monthly">Monthly</option>
               <option value="one time">One Time</option>
             </select>

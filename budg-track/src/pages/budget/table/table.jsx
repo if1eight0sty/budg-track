@@ -3,63 +3,24 @@ import TableHeading from "./components/table-heading";
 import TablePagination from "./components/table-pagination";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchStore } from "../../home/components/search/store";
+import { BudgetHelper } from "../helper";
+import { useQuery } from "@tanstack/react-query";
 const Table = () => {
-  const data = useMemo(
-    () => [
-      {
-        name: "Salary",
-        date: "2021-08-01",
-        type: "Income",
-        recurring: "Monthly",
-      },
-      {
-        name: "Books selling",
-        date: "2021-08-01",
-        type: "Income",
-        recurring: "Monthly",
-      },
-      {
-        name: "Pokemon cards selling",
-        date: "2021-08-01",
-        type: "Income",
-        recurring: "one time",
-      },
-      {
-        name: "Found",
-        date: "2021-08-01",
-        type: "Income",
-        recurring: "one time",
-      },
-      {
-        name: "Rent",
-        date: "2021-08-01",
-        type: "expense",
-        recurring: "Monthly",
-      },
-      {
-        name: "Shopping",
-        date: "2021-08-01",
-        type: "Expense",
-        recurring: "one time",
-      },
-      {
-        name: "Salary",
-        date: "2021-08-01",
-        type: "Income",
-        recurring: "Monthly",
-      },
-    ],
-    []
-  );
+  // classes
+  const budgetClass = useMemo(() => new BudgetHelper(), []);
   // stores
   const {
     search,
     filters,
     //  dateRange
   } = useSearchStore();
+  const { data: budgets } = useQuery({
+    queryKey: ["get", "budgets"],
+    queryFn: () => budgetClass.getBudgets(),
+  });
   // states
   // filter states
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(budgets);
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -69,27 +30,27 @@ const Table = () => {
   // searching data based on search
   useEffect(() => {
     if (!search) {
-      setFilteredData(data);
+      setFilteredData(budgets);
       return;
     }
     setFilteredData(
-      data.filter(
+      budgets.filter(
         (item) =>
           item.name.toLowerCase().includes(search.toLowerCase()) ||
           item.type.toLowerCase().includes(search.toLowerCase()) ||
           item.recurring.toLowerCase().includes(search.toLowerCase())
       )
     );
-  }, [search, data]);
+  }, [search, budgets]);
 
   // filtering data based on filters i.e type and recurring
   useEffect(() => {
     if (!filters.type && !filters.recurring) {
-      setFilteredData(data);
+      setFilteredData(budgets);
       return;
     }
     setFilteredData(
-      data.filter(
+      budgets.filter(
         (item) =>
           item.type.toLowerCase().includes(filters?.type.toLowerCase()) &&
           item.recurring
@@ -97,7 +58,8 @@ const Table = () => {
             .includes(filters?.recurring.toLowerCase())
       )
     );
-  }, [filters, data]);
+  }, [filters, budgets]);
+
   return (
     <section className="bg-white py-2 px-3 mb-10 rounded">
       <TableHeading />
@@ -142,7 +104,7 @@ const Table = () => {
         </tbody>
       </table>
       <TablePagination
-        length={filteredData?.length}
+        length={filteredData?.length || 0}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         setCurrentPage={setCurrentPage}
