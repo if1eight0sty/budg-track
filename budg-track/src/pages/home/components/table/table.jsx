@@ -1,57 +1,83 @@
 import { Icon } from "@iconify/react";
 import TableHeading from "./components/table-heading";
 import TablePagination from "./components/table-pagination";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchStore } from "../search/store";
 const Table = () => {
-  const data = [
-    {
-      name: "Salary",
-      date: "2021-08-01",
-      type: "Income",
-      recurring: "Monthly",
-    },
-    {
-      name: "Books selling",
-      date: "2021-08-01",
-      type: "Income",
-      recurring: "Monthly",
-    },
-    {
-      name: "Pokemon cards selling",
-      date: "2021-08-01",
-      type: "Income",
-      recurring: "one time",
-    },
-    {
-      name: "Found",
-      date: "2021-08-01",
-      type: "Income",
-      recurring: "one time",
-    },
-    {
-      name: "Rent",
-      date: "2021-08-01",
-      type: "expense",
-      recurring: "Monthly",
-    },
-    {
-      name: "Shopping",
-      date: "2021-08-01",
-      type: "Expense",
-      recurring: "one time",
-    },
-    {
-      name: "Salary",
-      date: "2021-08-01",
-      type: "Income",
-      recurring: "Monthly",
-    },
-  ];
+  const data = useMemo(
+    () => [
+      {
+        name: "Salary",
+        date: "2021-08-01",
+        type: "Income",
+        recurring: "Monthly",
+      },
+      {
+        name: "Books selling",
+        date: "2021-08-01",
+        type: "Income",
+        recurring: "Monthly",
+      },
+      {
+        name: "Pokemon cards selling",
+        date: "2021-08-01",
+        type: "Income",
+        recurring: "one time",
+      },
+      {
+        name: "Found",
+        date: "2021-08-01",
+        type: "Income",
+        recurring: "one time",
+      },
+      {
+        name: "Rent",
+        date: "2021-08-01",
+        type: "expense",
+        recurring: "Monthly",
+      },
+      {
+        name: "Shopping",
+        date: "2021-08-01",
+        type: "Expense",
+        recurring: "one time",
+      },
+      {
+        name: "Salary",
+        date: "2021-08-01",
+        type: "Income",
+        recurring: "Monthly",
+      },
+    ],
+    []
+  );
+  // stores
+  const { search } = useSearchStore();
+  // states
+  // filter states
+  const [filteredData, setFilteredData] = useState(data);
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+  // filtering data based on search
+  useEffect(() => {
+    if (!search) {
+      setFilteredData(data);
+      return;
+    }
+    setFilteredData(
+      data.filter(
+        (item) =>
+          item.name.toLowerCase().includes(search.toLowerCase()) ||
+          item.type.toLowerCase().includes(search.toLowerCase()) ||
+          item.recurring.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, data]);
+
   return (
     <section className="bg-white py-2 px-3 mb-10 rounded">
       <TableHeading />
@@ -66,7 +92,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="text-[#2e2e2e]/70">
-          {data.slice(startIndex, endIndex).map((item, index) => (
+          {filteredData.slice(startIndex, endIndex).map((item, index) => (
             <tr key={index}>
               <td className="py-1">{item.name}</td>
               <td>{item.date}</td>

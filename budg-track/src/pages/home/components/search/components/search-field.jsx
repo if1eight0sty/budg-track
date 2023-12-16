@@ -1,5 +1,13 @@
 import { Icon } from "@iconify/react";
+import { useSearchStore } from "../store";
 const SearchField = () => {
+  // stores
+  const { search: value, setSearch: setValue } = useSearchStore();
+  // handlers
+  // handles on change event of input field
+  const handleOnChange = (e) => {
+    setValue(e.target.value);
+  };
   return (
     <>
       <div className="flex justify-center">
@@ -11,6 +19,8 @@ const SearchField = () => {
             type="text"
             name="search"
             placeholder="Search here"
+            value={value}
+            onChange={handleOnChange}
             className="flex-1 outline-none bg-transparent text-[#2e2e2e]/80 tracking-wide font-semibold placeholder:font-medium placeholder-[#2e2e2e]/50 placeholder:text-[.9rem]"
           />
         </form>
