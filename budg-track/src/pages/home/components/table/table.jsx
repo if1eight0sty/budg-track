@@ -52,7 +52,11 @@ const Table = () => {
     []
   );
   // stores
-  const { search } = useSearchStore();
+  const {
+    search,
+    filters,
+    //  dateRange
+  } = useSearchStore();
   // states
   // filter states
   const [filteredData, setFilteredData] = useState(data);
@@ -62,7 +66,7 @@ const Table = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // filtering data based on search
+  // searching data based on search
   useEffect(() => {
     if (!search) {
       setFilteredData(data);
@@ -78,6 +82,22 @@ const Table = () => {
     );
   }, [search, data]);
 
+  // filtering data based on filters i.e type and recurring
+  useEffect(() => {
+    if (!filters.type && !filters.recurring) {
+      setFilteredData(data);
+      return;
+    }
+    setFilteredData(
+      data.filter(
+        (item) =>
+          item.type.toLowerCase().includes(filters?.type.toLowerCase()) &&
+          item.recurring
+            .toLowerCase()
+            .includes(filters?.recurring.toLowerCase())
+      )
+    );
+  }, [filters, data]);
   return (
     <section className="bg-white py-2 px-3 mb-10 rounded">
       <TableHeading />
@@ -92,29 +112,37 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="text-[#2e2e2e]/70">
-          {filteredData.slice(startIndex, endIndex).map((item, index) => (
-            <tr key={index}>
-              <td className="py-1">{item.name}</td>
-              <td>{item.date}</td>
-              <td>{item.type}</td>
-              <td className="">{item.recurring}</td>
-              <td className="flex gap-x-2 justify-center items-center py-2">
-                <button title={`View details of ${item.name}`}>
-                  <Icon icon="mingcute:file-info-line" width={20} />
-                </button>
-                <button title={`Edit details of ${item.name}`}>
-                  <Icon icon="pixelarticons:edit" width={20} />
-                </button>
-                <button className="Delete <name>">
-                  <Icon icon="pixelarticons:delete" width={20} />
-                </button>
+          {Array.isArray(filteredData) && filteredData?.length > 0 ? (
+            filteredData.slice(startIndex, endIndex).map((item, index) => (
+              <tr key={index}>
+                <td className="py-1">{item.name}</td>
+                <td>{item.date}</td>
+                <td>{item.type}</td>
+                <td className="">{item.recurring}</td>
+                <td className="flex gap-x-2 justify-center items-center py-2">
+                  <button title={`View details of ${item.name}`}>
+                    <Icon icon="mingcute:file-info-line" width={20} />
+                  </button>
+                  <button title={`Edit details of ${item.name}`}>
+                    <Icon icon="pixelarticons:edit" width={20} />
+                  </button>
+                  <button className="Delete <name>">
+                    <Icon icon="pixelarticons:delete" width={20} />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr className="text-[#2e2e2e]/70">
+              <td colSpan={5} className="py-2">
+                No data found
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
       <TablePagination
-        length={data?.length}
+        length={filteredData?.length}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         setCurrentPage={setCurrentPage}
