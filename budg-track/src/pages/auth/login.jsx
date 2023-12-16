@@ -1,13 +1,28 @@
+import { useMemo } from "react";
 import InputField from "../../components/input-field";
+import { useAuthStore } from "./store";
+import { AuthHelper } from "./helper";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  // classes
+  const authClass = useMemo(() => new AuthHelper(), []);
+  // stores
+  const {
+    loginData: data,
+    setLoginData: setData,
+    loginDataError: error,
+    setLoginDataError: setError,
+  } = useAuthStore();
   // handlers
   const handleOnChange = (e) => {
-    // setData({ ...data, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
   // handlers for form submit event
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    authClass.login(data, setError, navigate);
   };
   return (
     <>
@@ -24,20 +39,30 @@ const Login = () => {
                   type="email"
                   name="email"
                   id="username"
-                  //   value={data.username}
+                  value={data.email}
                   onChange={handleOnChange}
                   placeholder={"Type your email"}
                 />
+                {error.email && (
+                  <p className="text-rose-500 text-[.8rem] -mt-3">
+                    {error.email}
+                  </p>
+                )}
                 <InputField
                   label="Password"
                   icon="pixelarticons:lock"
                   type="password"
                   name="password"
                   id="password"
-                  //   value={data.password}
+                  value={data.password}
                   onChange={handleOnChange}
                   placeholder={"Type your password"}
                 />
+                {error.password && (
+                  <p className="text-rose-500 text-[.8rem] -mt-3">
+                    {error.password}
+                  </p>
+                )}
               </div>
               <button
                 type="submit"

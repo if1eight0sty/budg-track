@@ -1,13 +1,28 @@
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "../../components/input-field";
+import { AuthHelper } from "./helper";
+import { useAuthStore } from "./store";
 
 const Register = () => {
+  const navigate = useNavigate();
+  // classes
+  const authClass = useMemo(() => new AuthHelper(), []);
+  // stores
+  const {
+    registerData: data,
+    setRegisterData: setData,
+    registerDataError: error,
+    setRegisterDataError: setError,
+  } = useAuthStore();
   // handlers
   const handleOnChange = (e) => {
-    // setData({ ...data, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
   // handlers for form submit event
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    authClass.register(data, setError, navigate);
   };
   return (
     <>
@@ -22,34 +37,49 @@ const Register = () => {
               <div className="flex flex-col w-full gap-y-4">
                 <InputField
                   label="name"
-                  icon="memory:email"
+                  icon="pixelarticons:user"
                   type="text"
                   name="name"
                   id="name"
-                  //   value={data.username}
+                  value={data.name}
                   onChange={handleOnChange}
-                  placeholder={"Type your username"}
+                  placeholder="Type your name"
                 />
+                {error.name && (
+                  <p className="text-rose-500 text-[.8rem] -mt-3">
+                    {error.name}
+                  </p>
+                )}
                 <InputField
                   label="Email"
                   icon="memory:email"
                   type="email"
                   name="email"
                   id="username"
-                  //   value={data.username}
+                  value={data.email}
                   onChange={handleOnChange}
-                  placeholder={"Type your email"}
+                  placeholder="Type your email"
                 />
+                {error.email && (
+                  <p className="text-rose-500 text-[.8rem] -mt-3">
+                    {error.email}
+                  </p>
+                )}
                 <InputField
                   label="Password"
                   icon="pixelarticons:lock"
                   type="password"
                   name="password"
                   id="password"
-                  //   value={data.password}
+                  value={data.password}
                   onChange={handleOnChange}
-                  placeholder={"Type your password"}
+                  placeholder="Type your password"
                 />
+                {error.password && (
+                  <p className="text-rose-500 text-[.8rem] -mt-3">
+                    {error.password}
+                  </p>
+                )}
               </div>
               <button
                 type="submit"
