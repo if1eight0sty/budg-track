@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
+import { Icon } from "@iconify/react";
 const InputField = ({
   id,
   label,
-  Icon,
+  icon,
   type,
   name,
   placeholder,
@@ -14,13 +15,15 @@ const InputField = ({
       <div className="flex flex-col w-full text-gray-500 border-b-[2px] border-gray-400/60">
         <label
           htmlFor={id}
-          className="mb-1 text-[.95rem] font-semibold min-[650px]:text-[1rem] min-[650px]:mb-[0.3rem]"
+          className="mb-1 text-[.95rem] font-semibold min-[650px]:text-[1rem] min-[650px]:mb-[0.3rem] capitalize"
           aria-label="input-field-label"
         >
           {label}
         </label>
         <div className="flex items-center w-full gap-x-1">
-          <Icon className="text-[1rem] min-[650px]:text-[1.1rem]" />
+          <span className="text-[1rem] min-[650px]:text-[1.3rem]">
+            <Icon icon={icon} />
+          </span>
           <input
             type={type}
             name={name}
@@ -42,7 +45,7 @@ const InputField = ({
 InputField.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  Icon: PropTypes.elementType.isRequired,
+  icon: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
