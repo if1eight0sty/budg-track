@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
+import { IInputField } from "./interface";
 const InputField = ({
   id,
   label,
@@ -9,7 +10,7 @@ const InputField = ({
   placeholder,
   value,
   onChange,
-}) => {
+}: IInputField) => {
   return (
     <>
       <div className="flex flex-col w-full text-gray-500 border-b-[2px] border-gray-400/60">

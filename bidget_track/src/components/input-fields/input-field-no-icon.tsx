@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { IInputFieldNoIcon } from "./interface";
 const InputFieldNoIcon = ({
   id,
   label,
@@ -7,7 +8,7 @@ const InputFieldNoIcon = ({
   placeholder,
   value,
   onChange,
-}) => {
+}: IInputFieldNoIcon) => {
   return (
     <>
       <div className="flex flex-col w-full text-[#2e2e2e]/70">
