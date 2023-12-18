@@ -24,7 +24,7 @@ const FilterFields = () => {
               type="date"
               name="from"
               value={dateRange.from}
-              onChange={(e) => e}
+              onChange={handleOnDateChange}
               className="border py-[.3rem] px-[.4rem] rounded border-[#2e2e2e]/50 w-full  min-w-[8em]"
             />
             <input

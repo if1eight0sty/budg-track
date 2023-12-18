@@ -1,3 +1,4 @@
+import FilterFields from "./components/filter-fields";
 import SearchField from "./components/search-field";
 
 const Search = () => {
@@ -5,7 +6,7 @@ const Search = () => {
     <>
       <section className="w-full">
         <SearchField />
-        {/* <FilterFields /> */}
+        <FilterFields />
       </section>
     </>
   );
