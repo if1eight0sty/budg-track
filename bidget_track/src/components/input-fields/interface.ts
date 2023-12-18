@@ -23,4 +23,10 @@ export interface ISelectField {
   name: string;
   value: string | number;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  options: ISelectOptions[];
+}
+
+export interface ISelectOptions {
+  value: string;
+  label: string;
 }
