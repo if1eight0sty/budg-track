@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
+import { IStatCard } from "../interface";
 
-const StatCard = ({ value, title }) => {
+const StatCard = ({ value, title }: IStatCard) => {
   return (
     <>
-      <div className="border bg-white rounded">
+      <div className="bg-white border rounded">
         <div className="px-4 py-5 sm:p-6">
           <dt className="text-sm font-medium text-gray-500 truncate">
             {title}
@@ -18,11 +18,6 @@ const StatCard = ({ value, title }) => {
       </div>
     </>
   );
-};
-
-StatCard.propTypes = {
-  value: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
 };
 
 export default StatCard;
