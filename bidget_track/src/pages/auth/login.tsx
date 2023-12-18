@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useAuthStore } from "./store";
 import { AuthHelper } from "./helper";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../components/input-fields/input-field";
 const Login = () => {
   const navigate = useNavigate();
@@ -65,13 +65,20 @@ const Login = () => {
                   </p>
                 )}
               </div>
+
               <button
                 type="submit"
-                className="w-full px-4 py-2 mt-8 text-lg font-semibold text-white rounded bg-[#2e2e2e] hover:shadow-lg"
+                className="w-full px-4 py-2 mt-6 text-lg font-semibold text-white rounded bg-[#2e2e2e] hover:shadow-lg"
                 onClick={handleOnSubmit}
               >
                 Login
               </button>
+              <div className="flex justify-start w-full mt-3 text-[.8rem]">
+                <p>
+                  Don&apos;t have an account?{" "}
+                  <Link to={"/register"}>Register here</Link>
+                </p>
+              </div>
             </div>
           </form>
           <div className="w-[5em] h-[5em] bg-sky-500/70 rounded-full absolute z-[-1] top-20 left-10"></div>

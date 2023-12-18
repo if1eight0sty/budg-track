@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthHelper } from "./helper";
 import { useAuthStore } from "./store";
 import InputField from "../../components/input-fields/input-field";
@@ -20,12 +20,12 @@ const Register = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   // handlers for form submit event
- const handleOnSubmit = async (
-   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
- ) => {
-   e.preventDefault();
-   authClass.register(data, setError, navigate);
- };
+  const handleOnSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    authClass.register(data, setError, navigate);
+  };
   return (
     <>
       <main className="flex items-center justify-center w-full h-screen">
@@ -83,6 +83,7 @@ const Register = () => {
                   </p>
                 )}
               </div>
+
               <button
                 type="submit"
                 className="w-full px-4 py-2 mt-8 text-lg font-semibold text-white rounded bg-[#2e2e2e] hover:shadow-lg"
@@ -90,6 +91,11 @@ const Register = () => {
               >
                 Register
               </button>
+              <div className="flex justify-start w-full mt-3 text-[.8rem]">
+                <p>
+                  Already have an account? <Link to={"/login"}>Login here</Link>
+                </p>
+              </div>
             </div>
           </form>
           <div className="w-[5em] h-[5em] bg-sky-500/70 rounded-full absolute z-[-1] top-20 left-10"></div>
