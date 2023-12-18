@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import { IInputField } from "./interface";
 const InputField = ({
@@ -41,17 +40,6 @@ const InputField = ({
       </div>
     </>
   );
-};
-
-InputField.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default InputField;
