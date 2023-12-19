@@ -11,7 +11,6 @@ import { CheckAuthClass } from "./helper";
 const Layout = () => {
   // Creating an instance of CheckAuthClass using useMemo hook
   const checkAuthClass = useMemo(() => new CheckAuthClass(), []);
-
   // Fetching user data using useQuery hook
   const { data: user, isFetching } = useQuery({
     queryKey: ["get", "user"],
