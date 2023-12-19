@@ -19,7 +19,6 @@ const Table = () => {
     queryKey: ["get", "budgets"],
     queryFn: () => budgetClass.getBudgets(),
   });
-  console.log("🚀 ~ file: table.tsx:22 ~ Table ~ budgets:", budgets);
   // states
   // filter states
   const [filteredData, setFilteredData] = useState(budgets);
@@ -36,7 +35,7 @@ const Table = () => {
       return;
     }
     setFilteredData(
-      budgets.filter(
+      budgets?.filter(
         (item: IBudgetData) =>
           item.name.toLowerCase().includes(search.toLowerCase()) ||
           item.type.toLowerCase().includes(search.toLowerCase()) ||
@@ -52,7 +51,7 @@ const Table = () => {
       return;
     }
     setFilteredData(
-      budgets.filter(
+      budgets?.filter(
         (item: IBudgetData) =>
           item.type.toLowerCase().includes(filters?.type.toLowerCase()) &&
           item.recurring

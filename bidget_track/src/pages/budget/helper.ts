@@ -1,4 +1,4 @@
-import { IBudgetData, IBudgetDataError } from "./interface";
+import { IBudgetData, IBudgetDataError, IUserData } from "./interface";
 
 export class BudgetHelper {
   checkBudgetData = (data: IBudgetData) => {
@@ -40,8 +40,14 @@ export class BudgetHelper {
     clearData();
   };
   getBudgets = () => {
-    return localStorage.getItem("budgets")
+    const budgets: IBudgetData[] = localStorage.getItem("budgets")
       ? JSON.parse(localStorage.getItem("budgets")!)
       : [];
+    const user: IUserData = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user")!)
+      : null;
+    return budgets.filter(
+      (budget: IBudgetData) => budget.user.email === user.email
+    );
   };
 }
