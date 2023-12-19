@@ -32,9 +32,9 @@ export class AuthHelper {
       setError(error);
       return;
     }
-   const users = localStorage.getItem("users")
-     ? JSON.parse(localStorage.getItem("users")!)
-     : [];
+    const users = localStorage.getItem("users")
+      ? JSON.parse(localStorage.getItem("users")!)
+      : [];
     const user = users.find((user: IRegisterData) => user.email === data.email);
     if (!user) {
       setError({ email: "Email does not exist", password: "" });

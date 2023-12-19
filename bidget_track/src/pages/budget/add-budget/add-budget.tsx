@@ -35,8 +35,8 @@ const AddBudget = () => {
   return (
     <>
       <div className="px-2 @[30em]:px-6 @[50em]:px-10 @[1300px]:px-16 mb-10">
-        <div className="flex items-center justify-center w-full py-10 mt-5 bg-white rounded">
-          <section className="relative flex-1 ">
+        <div className="flex items-center justify-center w-full py-10 mt-5 bg-white rounded md:justify-start">
+          <section className="relative">
             <form className="flex items-center justify-center w-full">
               <div className="flex flex-col items-center px-4 py-4 w-[20em] min-[500px]:w-[25em] min-[650px]:w-[27em]">
                 <h1 className="mb-8 text-2xl font-bold text-gray-600">Add</h1>

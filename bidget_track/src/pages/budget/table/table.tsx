@@ -19,6 +19,7 @@ const Table = () => {
     queryKey: ["get", "budgets"],
     queryFn: () => budgetClass.getBudgets(),
   });
+  console.log("🚀 ~ file: table.tsx:22 ~ Table ~ budgets:", budgets);
   // states
   // filter states
   const [filteredData, setFilteredData] = useState(budgets);

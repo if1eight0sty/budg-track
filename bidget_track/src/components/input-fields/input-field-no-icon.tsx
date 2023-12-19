@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { IInputFieldNoIcon } from "./interface";
 const InputFieldNoIcon = ({
   id,
@@ -34,16 +33,6 @@ const InputFieldNoIcon = ({
       </div>
     </>
   );
-};
-
-InputFieldNoIcon.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default InputFieldNoIcon;
