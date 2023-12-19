@@ -15,7 +15,7 @@ const AddBudget = () => {
     clearBudgetData: clearData,
     budgetDataError: error,
     setBudgetDataError: setError,
-  } = useBudgetStore(); // Destructure values from useBudgetStore hook
+  } = useBudgetStore(); // Destructure values from useBudgetStore store
 
   // handlers
   const handleOnChange = (
@@ -41,6 +41,7 @@ const AddBudget = () => {
               <div className="flex flex-col items-center px-4 py-4 w-[20em] min-[500px]:w-[25em] min-[650px]:w-[27em]">
                 <h1 className="mb-8 text-2xl font-bold text-gray-600">Add</h1>
                 <div className="flex flex-col w-full gap-y-4">
+                  {/* Input field for name */}
                   <InputFieldNoIcon
                     label="name"
                     type="name"
@@ -55,6 +56,7 @@ const AddBudget = () => {
                       {error.name}
                     </p>
                   )}
+                  {/* Input field for amount */}
                   <InputFieldNoIcon
                     label="Amount"
                     type="number"
@@ -69,6 +71,7 @@ const AddBudget = () => {
                       {error.amount}
                     </p>
                   )}
+                  {/* Input field for date */}
                   <InputFieldNoIcon
                     label="Date"
                     type="date"
@@ -83,6 +86,7 @@ const AddBudget = () => {
                       {error.date}
                     </p>
                   )}
+                  {/* Select field for type */}
                   <SelectField
                     id="type"
                     label="Type"
@@ -99,6 +103,7 @@ const AddBudget = () => {
                       {error.type}
                     </p>
                   )}
+                  {/* Select field for recurring */}
                   <SelectField
                     id="recurring"
                     label="Recurring"
@@ -116,6 +121,7 @@ const AddBudget = () => {
                     </p>
                   )}
                 </div>
+                {/* Submit button */}
                 <button
                   type="submit"
                   className="w-full px-4 py-2 mt-8 text-lg font-semibold text-white rounded bg-[#2e2e2e] hover:shadow-lg"

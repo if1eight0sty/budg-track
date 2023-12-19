@@ -16,8 +16,9 @@ const FilterFields = () => {
   };
   return (
     <>
+      {/*  Filters */}
       <div className="grid gap-3 mt-5 mb-3 md:grid-cols-3">
-        <div className="bg-white text-[#2e2e2e]/70 p-2  rounded">
+        <div className="bg-white text-[#2e2e2e]/70 p-2 rounded">
           <p className="font-semibold">Date Range</p>
           <div className="flex mt-2 gap-x-2">
             <input

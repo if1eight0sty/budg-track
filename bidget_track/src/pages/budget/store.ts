@@ -1,6 +1,6 @@
 // Importing the 'create' function from the 'zustand' library
 import { create } from "zustand";
-import { IUseBudgetStore } from "./interface";
+import { IUseBudgetStore, IUserData } from "./interface";
 
 // Creating a custom hook called 'useBudgetStore' using the 'create' function
 export const useBudgetStore = create<IUseBudgetStore>((set) => ({
@@ -11,6 +11,7 @@ export const useBudgetStore = create<IUseBudgetStore>((set) => ({
     date: "",
     type: "",
     recurring: "",
+    user: {} as IUserData,
   },
 
   // Function to update the budgetData state

@@ -6,22 +6,27 @@ import { BudgetHelper } from "../helper";
 import { useQuery } from "@tanstack/react-query";
 import { IBudgetData } from "../interface";
 import { useSearchStore } from "../../home/search/store";
+
 const Table = () => {
   // classes
   const budgetClass = useMemo(() => new BudgetHelper(), []);
+
   // stores
   const {
     search,
     filters,
     //  dateRange
   } = useSearchStore();
+
   const { data: budgets } = useQuery({
     queryKey: ["get", "budgets"],
     queryFn: () => budgetClass.getBudgets(),
   });
+
   // states
   // filter states
   const [filteredData, setFilteredData] = useState(budgets);
+
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -63,7 +68,9 @@ const Table = () => {
 
   return (
     <section className="px-3 py-2 mb-10 bg-white rounded">
+      {/* Table heading */}
       <TableHeading />
+
       <table className="w-full text-center border">
         <thead className="text-[#2e2e2e]/80 font-semibold tracking-wide border">
           <tr>
@@ -74,8 +81,10 @@ const Table = () => {
             <th>Actions</th>
           </tr>
         </thead>
+
         <tbody className="text-[#2e2e2e]/70">
           {Array.isArray(filteredData) && filteredData?.length > 0 ? (
+            // Render table rows for filtered data
             filteredData.slice(startIndex, endIndex).map((item, index) => (
               <tr key={index}>
                 <td className="py-1">{item.name}</td>
@@ -83,12 +92,17 @@ const Table = () => {
                 <td>{item.type}</td>
                 <td className="">{item.recurring}</td>
                 <td className="flex items-center justify-center py-2 gap-x-2">
+                  {/* View details button */}
                   <button title={`View details of ${item.name}`}>
                     <Icon icon="mingcute:file-info-line" width={20} />
                   </button>
+
+                  {/* Edit details button */}
                   <button title={`Edit details of ${item.name}`}>
                     <Icon icon="pixelarticons:edit" width={20} />
                   </button>
+
+                  {/* Delete button */}
                   <button className="Delete <name>">
                     <Icon icon="pixelarticons:delete" width={20} />
                   </button>
@@ -96,6 +110,7 @@ const Table = () => {
               </tr>
             ))
           ) : (
+            // Render "No data found" message
             <tr className="text-[#2e2e2e]/70">
               <td colSpan={5} className="py-2">
                 No data found
@@ -104,6 +119,8 @@ const Table = () => {
           )}
         </tbody>
       </table>
+
+      {/* Table pagination */}
       <TablePagination
         length={filteredData?.length || 0}
         currentPage={currentPage}

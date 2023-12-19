@@ -1,5 +1,8 @@
+// Importing necessary dependencies
 import { Icon } from "@iconify/react";
 import { IInputField } from "./interface";
+
+// Defining the InputField component
 const InputField = ({
   id,
   label,
@@ -13,6 +16,7 @@ const InputField = ({
   return (
     <>
       <div className="flex flex-col w-full text-gray-500 border-b-[2px] border-gray-400/60">
+        {/* Label for the input field */}
         <label
           htmlFor={id}
           className="mb-1 text-[.95rem] font-semibold min-[650px]:text-[1rem] min-[650px]:mb-[0.3rem] capitalize"
@@ -21,9 +25,11 @@ const InputField = ({
           {label}
         </label>
         <div className="flex items-center w-full gap-x-1">
+          {/* Icon for the input field */}
           <span className="text-[1rem] min-[650px]:text-[1.3rem]">
             <Icon icon={icon} />
           </span>
+          {/* Input field */}
           <input
             type={type}
             name={name}

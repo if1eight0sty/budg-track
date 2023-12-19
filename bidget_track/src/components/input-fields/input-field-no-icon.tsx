@@ -1,4 +1,6 @@
 import { IInputFieldNoIcon } from "./interface";
+
+// Define the InputFieldNoIcon component
 const InputFieldNoIcon = ({
   id,
   label,
@@ -11,6 +13,7 @@ const InputFieldNoIcon = ({
   return (
     <>
       <div className="flex flex-col w-full text-[#2e2e2e]/70">
+        {/* Render the label */}
         <label
           htmlFor={id}
           className="mb-1 text-[.95rem] font-semibold min-[650px]:text-[1rem] min-[650px]:mb-[0.3rem] capitalize"
@@ -18,6 +21,7 @@ const InputFieldNoIcon = ({
         >
           {label}
         </label>
+        {/* Render the input field */}
         <input
           type={type}
           name={name}

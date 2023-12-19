@@ -3,37 +3,47 @@ import { useAuthStore } from "./store";
 import { AuthHelper } from "./helper";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../components/input-fields/input-field";
+
 const Login = () => {
   const navigate = useNavigate();
-  // classes
+
+  // Instantiate AuthHelper class
   const authClass = useMemo(() => new AuthHelper(), []);
-  // stores
+
+  // Retrieve data and error states from useAuthStore class
   const {
     loginData: data,
     setLoginData: setData,
     loginDataError: error,
     setLoginDataError: setError,
   } = useAuthStore();
-  // handlers
+
+  // Handle input change event
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  // handlers for form submit event
+
+  // Handle form submit event
   const handleOnSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     authClass.login(data, setError, navigate);
   };
+
   return (
     <>
       <main className="flex items-center justify-center w-full h-screen">
+        {/* Left section */}
         <section className="min-[900px]:flex-1 hidden min-[900px]:block min-[900px]:border-r h-screen "></section>
+
+        {/* Right section */}
         <section className="relative flex-1 h-screen overflow-hidden isolate">
           <form className="flex items-center justify-center w-full h-screen backdrop-blur-md ">
             <div className="flex flex-col items-center px-4 py-4 w-[20em] min-[500px]:w-[25em] min-[650px]:w-[27em]">
               <h1 className="mb-8 text-2xl font-bold text-gray-600">Login</h1>
               <div className="flex flex-col w-full gap-y-4">
+                {/* Email input field */}
                 <InputField
                   label="Email"
                   icon="memory:email"
@@ -49,6 +59,8 @@ const Login = () => {
                     {error.email}
                   </p>
                 )}
+
+                {/* Password input field */}
                 <InputField
                   label="Password"
                   icon="pixelarticons:lock"
@@ -66,6 +78,7 @@ const Login = () => {
                 )}
               </div>
 
+              {/* Login button */}
               <button
                 type="submit"
                 className="w-full px-4 py-2 mt-6 text-lg font-semibold text-white rounded bg-[#2e2e2e] hover:shadow-lg"
@@ -73,6 +86,8 @@ const Login = () => {
               >
                 Login
               </button>
+
+              {/* Register link */}
               <div className="flex justify-start w-full mt-3 text-[.8rem]">
                 <p>
                   Don&apos;t have an account?{" "}
@@ -81,6 +96,8 @@ const Login = () => {
               </div>
             </div>
           </form>
+
+          {/* Background circles */}
           <div className="w-[5em] h-[5em] bg-sky-500/70 rounded-full absolute z-[-1] top-20 left-10"></div>
           <div className="w-[20em] h-[20em] bg-rose-500/70 rounded-full absolute z-[-1] bottom-[-7em] right-[-7em]"></div>
           <div className="w-[10em] h-[10em] bg-green-500/70 rounded-full absolute z-[-1] top-[-5em] right-[-5em]"></div>
