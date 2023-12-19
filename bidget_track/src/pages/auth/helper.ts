@@ -25,8 +25,7 @@ export class AuthHelper {
   login = (
     data: ILoginData,
     setError: (data: ILoginDataError) => void,
-    clearData: () => void,
-    navigate: NavigateFunction
+    clearData: () => void
   ) => {
     const error = this.checkLoginData(data);
     if (error.email || error.password) {
@@ -47,7 +46,7 @@ export class AuthHelper {
     }
     localStorage.setItem("user", JSON.stringify(user));
     clearData();
-    navigate("/");
+    window.location.replace("/");
   };
 
   register = (

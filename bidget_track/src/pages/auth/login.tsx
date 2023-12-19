@@ -1,12 +1,10 @@
 import { useMemo } from "react";
 import { useAuthStore } from "./store";
 import { AuthHelper } from "./helper";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import InputField from "../../components/input-fields/input-field";
 
 const Login = () => {
-  const navigate = useNavigate();
-
   // Instantiate AuthHelper class
   const authClass = useMemo(() => new AuthHelper(), []);
 
@@ -29,7 +27,7 @@ const Login = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    authClass.login(data, setError, clearData, navigate);
+    authClass.login(data, setError, clearData);
   };
 
   return (
