@@ -34,6 +34,7 @@ export class AuthHelper {
    * @param {Function} navigate - The function to navigate to a different page.
    */
   login = (data, setError, navigate) => {
+    console.log("🚀 ~ file: helper.js:37 ~ AuthHelper ~ data:", data);
     const error = this.checkLoginData(data);
     if (error.email || error.password) {
       setError(error);

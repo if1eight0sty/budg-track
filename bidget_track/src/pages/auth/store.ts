@@ -17,6 +17,15 @@ export const useAuthStore = create<IUseAuthStore>((set) => ({
         ...data,
       },
     })),
+  // Reset login data
+  clearLoginData: () =>
+    set((state) => ({
+      loginData: {
+        ...state.loginData,
+        email: "",
+        password: "",
+      },
+    })),
   // Initial state for login data errors
   loginDataError: {
     email: "",
@@ -42,6 +51,16 @@ export const useAuthStore = create<IUseAuthStore>((set) => ({
       registerData: {
         ...state.registerData,
         ...data,
+      },
+    })),
+  // Reset register data
+  clearRegisterData: () =>
+    set((state) => ({
+      registerData: {
+        ...state.registerData,
+        email: "",
+        password: "",
+        name: "",
       },
     })),
   // Initial state for register data errors

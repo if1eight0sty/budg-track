@@ -1,10 +1,12 @@
 export interface IUseAuthStore {
   loginData: ILoginData;
   setLoginData: (data: ILoginData) => void;
+  clearLoginData: () => void;
   loginDataError: ILoginDataError;
   setLoginDataError: (data: ILoginDataError) => void;
   registerData: IRegisterData;
   setRegisterData: (data: IRegisterData) => void;
+  clearRegisterData: () => void;
   registerDataError: IRegisterDataError;
   setRegisterDataError: (data: IRegisterDataError) => void;
 }

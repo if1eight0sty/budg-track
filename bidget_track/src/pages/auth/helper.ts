@@ -25,6 +25,7 @@ export class AuthHelper {
   login = (
     data: ILoginData,
     setError: (data: ILoginDataError) => void,
+    clearData: () => void,
     navigate: NavigateFunction
   ) => {
     const error = this.checkLoginData(data);
@@ -45,12 +46,14 @@ export class AuthHelper {
       return;
     }
     localStorage.setItem("user", JSON.stringify(user));
+    clearData();
     navigate("/");
   };
 
   register = (
     data: IRegisterData,
     setError: (data: IRegisterDataError) => void,
+    clearData: () => void,
     navigate: NavigateFunction
   ) => {
     const error = this.checkRegisterData(data);
@@ -68,6 +71,7 @@ export class AuthHelper {
     }
     users.push(data);
     localStorage.setItem("users", JSON.stringify(users));
+    clearData();
     navigate("/login");
   };
 }

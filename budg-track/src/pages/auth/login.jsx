@@ -12,6 +12,7 @@ const Login = () => {
   const {
     loginData: data,
     setLoginData: setData,
+
     loginDataError: error,
     setLoginDataError: setError,
   } = useAuthStore();

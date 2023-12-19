@@ -14,6 +14,7 @@ const Register = () => {
   const {
     registerData: data,
     setRegisterData: setData,
+    clearRegisterData: clearData,
     registerDataError: error,
     setRegisterDataError: setError,
   } = useAuthStore();
@@ -28,7 +29,7 @@ const Register = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    authClass.register(data, setError, navigate);
+    authClass.register(data, setError, clearData, navigate);
   };
 
   return (

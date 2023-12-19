@@ -14,6 +14,7 @@ const Login = () => {
   const {
     loginData: data,
     setLoginData: setData,
+    clearLoginData: clearData,
     loginDataError: error,
     setLoginDataError: setError,
   } = useAuthStore();
@@ -28,7 +29,7 @@ const Login = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    authClass.login(data, setError, navigate);
+    authClass.login(data, setError, clearData, navigate);
   };
 
   return (
