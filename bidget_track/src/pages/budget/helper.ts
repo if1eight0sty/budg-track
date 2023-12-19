@@ -13,7 +13,8 @@ export class BudgetHelper {
   addBudget = (
     data: IBudgetData,
     setError: (data: IBudgetDataError) => void,
-    clearData: () => void
+    clearData: () => void,
+    setBudgets: (data: IBudgetData[]) => void
   ) => {
     const errors = this.checkBudgetData(data);
     if (
@@ -37,6 +38,7 @@ export class BudgetHelper {
         : null,
     });
     localStorage.setItem("budgets", JSON.stringify(budgets));
+    setBudgets(budgets);
     clearData();
   };
   getBudgets = () => {
@@ -49,5 +51,14 @@ export class BudgetHelper {
     return budgets.filter(
       (budget: IBudgetData) => budget.user.email === user.email
     );
+  };
+  deleteBudget = (id: string, setBudgets: (data: IBudgetData[]) => void) => {
+    const budgets: IBudgetData[] = this.getBudgets();
+    budgets.splice(
+      budgets.findIndex((budget: IBudgetData) => budget.id === id),
+      1
+    );
+    localStorage.setItem("budgets", JSON.stringify(budgets));
+    setBudgets(budgets);
   };
 }

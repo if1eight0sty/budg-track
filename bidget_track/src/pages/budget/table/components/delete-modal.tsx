@@ -1,14 +1,15 @@
 import * as React from "react";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
+import { IDeleteModalProps } from "./interface";
+import { BudgetHelper } from "../../helper";
+import { useBudgetStore } from "../../store";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,38 +23,49 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DeleteModal = () => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
+const DeleteModal = ({ open, data, handleClose }: IDeleteModalProps) => {
+  // classes
+  const budgetClass = React.useMemo(() => new BudgetHelper(), []);
+  // stores
+  const { setBudgets } = useBudgetStore(); // Destructure values from useBudgetStore store
+  // handlers
+  // handlers
+  const handleDelete = (id: string) => {
+    budgetClass.deleteBudget(id, setBudgets); // Call the deleteBudget method of BudgetHelper class with id and setBudgets as arguments
+    handleClose(); // Close the modal
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button>
       <Dialog
         open={open}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
+        fullWidth
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>Delete {data?.name}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
+          <div className="">
+            <h4 className="mb-1 text-lg">
+              Are you sure you want to delete {data?.name}?
+            </h4>
+            <p>This will delete {data?.name} permanently.</p>
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
+          <button
+            className="px-4 py-2 text-lg font-semibold text-white rounded bg-[#2e2e2e] hover:shadow-lg"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
+          <button
+            className="px-4 py-2 text-lg font-semibold text-white bg-red-500 rounded hover:shadow-lg"
+            onClick={() => handleDelete(data?.id)}
+          >
+            Delete
+          </button>
         </DialogActions>
       </Dialog>
     </>

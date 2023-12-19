@@ -1,6 +1,7 @@
 import { IRegisterData } from "../auth/interface";
 
 export interface IBudgetData {
+  id: string;
   name: string;
   date: string;
   type: string;
@@ -22,6 +23,8 @@ export interface IUseBudgetStore {
   budgetDataError: IBudgetDataError;
   setBudgetDataError: (data: IBudgetDataError) => void;
   clearBudgetDataError: () => void;
+  budgets: IBudgetData[];
+  setBudgets: (data: IBudgetData[]) => void;
 }
 
 export interface IUserData extends IRegisterData {}

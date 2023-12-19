@@ -1,27 +1,23 @@
 import { Icon } from "@iconify/react";
 import TableHeading from "./components/table-heading";
 import TablePagination from "./components/table-pagination";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { BudgetHelper } from "../helper";
-import { useQuery } from "@tanstack/react-query";
 import { IBudgetData } from "../interface";
 import { useSearchStore } from "../../home/search/store";
+import DeleteModal from "./components/delete-modal";
+import { useBudgetStore } from "../store";
 
 const Table = () => {
   // classes
   const budgetClass = useMemo(() => new BudgetHelper(), []);
-
   // stores
+  const { budgets, setBudgets } = useBudgetStore();
   const {
     search,
     filters,
     //  dateRange
   } = useSearchStore();
-
-  const { data: budgets } = useQuery({
-    queryKey: ["get", "budgets"],
-    queryFn: () => budgetClass.getBudgets(),
-  });
 
   // states
   // filter states
@@ -33,6 +29,27 @@ const Table = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
+  // delete states
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState<IBudgetData>({} as IBudgetData);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteClick = (data: IBudgetData) => {
+    setData(data);
+    handleClickOpen();
+  };
+  const getBudgets = useCallback(() => {
+    const data = budgetClass.getBudgets();
+    setBudgets(data);
+    return data;
+  }, [budgetClass, setBudgets]);
   // searching data based on search
   useEffect(() => {
     if (!search) {
@@ -65,12 +82,13 @@ const Table = () => {
       )
     );
   }, [filters, budgets]);
-
+  useEffect(() => {
+    getBudgets();
+  }, [getBudgets]);
   return (
     <section className="px-3 py-2 mb-10 bg-white rounded">
       {/* Table heading */}
       <TableHeading />
-
       <table className="w-full text-center border">
         <thead className="text-[#2e2e2e]/80 font-semibold tracking-wide border">
           <tr>
@@ -85,8 +103,8 @@ const Table = () => {
         <tbody className="text-[#2e2e2e]/70">
           {Array.isArray(filteredData) && filteredData?.length > 0 ? (
             // Render table rows for filtered data
-            filteredData.slice(startIndex, endIndex).map((item, index) => (
-              <tr key={index}>
+            filteredData.slice(startIndex, endIndex).map((item) => (
+              <tr key={item?.id}>
                 <td className="py-1">{item.name}</td>
                 <td>{item.date}</td>
                 <td>{item.type}</td>
@@ -103,7 +121,10 @@ const Table = () => {
                   </button>
 
                   {/* Delete button */}
-                  <button className="Delete <name>">
+                  <button
+                    title={`Delete details of ${item.name}`}
+                    onClick={() => handleDeleteClick(item)}
+                  >
                     <Icon icon="pixelarticons:delete" width={20} />
                   </button>
                 </td>
@@ -127,6 +148,7 @@ const Table = () => {
         itemsPerPage={itemsPerPage}
         setCurrentPage={setCurrentPage}
       />
+      <DeleteModal data={data} handleClose={handleClose} open={open} />
     </section>
   );
 };

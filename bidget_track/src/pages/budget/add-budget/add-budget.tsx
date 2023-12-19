@@ -3,7 +3,7 @@ import InputFieldNoIcon from "../../../components/input-fields/input-field-no-ic
 import SelectField from "../../../components/input-fields/select-field";
 import { useBudgetStore } from "../store";
 import { BudgetHelper } from "../helper";
-
+import { v4 as uuidv4 } from "uuid";
 const AddBudget = () => {
   // classes
   const budgetClass = useMemo(() => new BudgetHelper(), []); // Create an instance of BudgetHelper class using useMemo hook
@@ -15,8 +15,8 @@ const AddBudget = () => {
     clearBudgetData: clearData,
     budgetDataError: error,
     setBudgetDataError: setError,
+    setBudgets,
   } = useBudgetStore(); // Destructure values from useBudgetStore store
-
   // handlers
   const handleOnChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -29,7 +29,12 @@ const AddBudget = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    budgetClass.addBudget(data, setError, clearData); // Call the addBudget method of BudgetHelper class with data, setError, and clearData as arguments
+    budgetClass.addBudget(
+      { ...data, id: uuidv4() },
+      setError,
+      clearData,
+      setBudgets
+    ); // Call the addBudget method of BudgetHelper class with data, setError, and clearData as arguments
   };
 
   return (
