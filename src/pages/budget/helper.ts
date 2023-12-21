@@ -1,3 +1,4 @@
+import { IStats } from "../../components/stats/interface";
 import { IBudgetData, IBudgetDataError, IUserData } from "./interface";
 
 export class BudgetHelper {
@@ -95,7 +96,7 @@ export class BudgetHelper {
     localStorage.setItem("budgets", JSON.stringify(budgets));
   };
   getSummaryStatistics = () => {
-    const summary = {
+    const summary: IStats = {
       total: 0,
       income: 0,
       expense: 0,
@@ -103,11 +104,11 @@ export class BudgetHelper {
     };
     const budgets: IBudgetData[] = this.getBudgets();
     budgets.forEach((budget: IBudgetData) => {
-      summary.total += budget.amount;
+      summary.total += budget.amount * 1;
       if (budget.type === "income") {
-        summary.income += budget.amount;
+        summary.income += budget.amount * 1;
       } else {
-        summary.expense += budget.amount;
+        summary.expense += budget.amount * 1;
       }
     });
     summary.balance = summary.income - summary.expense;

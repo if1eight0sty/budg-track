@@ -102,6 +102,7 @@ const Table = () => {
             <th>Date</th>
             <th>Type</th>
             <th>Recurring</th>
+            <th>Amount</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -115,6 +116,7 @@ const Table = () => {
                 <td>{item.date}</td>
                 <td>{item.type}</td>
                 <td className="">{item.recurring}</td>
+                <td className="">{item.amount}</td>
                 <td className="flex items-center justify-center py-2 gap-x-2">
                   {/* View details button */}
                   <button title={`View details of ${item.name}`}>
