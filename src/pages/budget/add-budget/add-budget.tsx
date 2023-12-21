@@ -4,6 +4,7 @@ import SelectField from "../../../components/input-fields/select-field";
 import { useBudgetStore } from "../store";
 import { BudgetHelper } from "../helper";
 import { v4 as uuidv4 } from "uuid";
+import { useStatisticsStore } from "../../../components/stats/store";
 const AddBudget = () => {
   // classes
   const budgetClass = useMemo(() => new BudgetHelper(), []); // Create an instance of BudgetHelper class using useMemo hook
@@ -17,6 +18,7 @@ const AddBudget = () => {
     setBudgetDataError: setError,
     setBudgets,
   } = useBudgetStore(); // Destructure values from useBudgetStore store
+  const { setSummary } = useStatisticsStore(); // Destructure values from useStatisticsStore store
 
   // handlers for input change event
   const handleOnChange = (
@@ -34,7 +36,8 @@ const AddBudget = () => {
       { ...data, id: uuidv4() },
       setError,
       clearData,
-      setBudgets
+      setBudgets,
+      setSummary
     ); // Call the addBudget method of BudgetHelper class with data, setError, and clearData as arguments
   };
 

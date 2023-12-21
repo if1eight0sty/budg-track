@@ -27,7 +27,8 @@ export class BudgetHelper {
     data: IBudgetData,
     setError: (data: IBudgetDataError) => void,
     clearData: () => void,
-    setBudgets: (data: IBudgetData[]) => void
+    setBudgets: (data: IBudgetData[]) => void,
+    setSummary: (data: IStats) => void
   ) => {
     const errors = this.checkBudgetData(data);
     if (this.checkErrors(errors)) {
@@ -46,6 +47,8 @@ export class BudgetHelper {
     });
     localStorage.setItem("budgets", JSON.stringify(budgets));
     setBudgets(budgets);
+    const summary = this.getSummaryStatistics();
+    setSummary(summary);
     clearData();
   };
   getBudgets = () => {
@@ -59,7 +62,11 @@ export class BudgetHelper {
       (budget: IBudgetData) => budget.user.email === user.email
     );
   };
-  deleteBudget = (id: string, setBudgets: (data: IBudgetData[]) => void) => {
+  deleteBudget = (
+    id: string,
+    setBudgets: (data: IBudgetData[]) => void,
+    setSummary: (data: IStats) => void
+  ) => {
     const budgets: IBudgetData[] = this.getBudgets();
     budgets.splice(
       budgets.findIndex((budget: IBudgetData) => budget.id === id),
@@ -67,6 +74,8 @@ export class BudgetHelper {
     );
     localStorage.setItem("budgets", JSON.stringify(budgets));
     setBudgets(budgets);
+    const summary = this.getSummaryStatistics();
+    setSummary(summary);
   };
   getBudgetById = (id: string) => {
     const budgets: IBudgetData[] = this.getBudgets();
@@ -75,7 +84,8 @@ export class BudgetHelper {
   updateBudget = (
     data: IBudgetData,
     setBudgets: (data: IBudgetData[]) => void,
-    setError: (data: IBudgetDataError) => void
+    setError: (data: IBudgetDataError) => void,
+    setSummary: (data: IStats) => void
   ) => {
     const errors = this.checkBudgetData(data);
     if (this.checkErrors(errors)) {
@@ -94,6 +104,8 @@ export class BudgetHelper {
     );
     setBudgets(budgets);
     localStorage.setItem("budgets", JSON.stringify(budgets));
+    const summary = this.getSummaryStatistics();
+    setSummary(summary);
   };
   getSummaryStatistics = () => {
     const summary: IStats = {

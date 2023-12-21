@@ -9,3 +9,8 @@ export interface IStats {
   expense: number;
   balance: number;
 }
+
+export interface IStatisticsStore {
+  summary: IStats;
+  setSummary: (data: IStats) => void;
+}

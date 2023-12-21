@@ -4,6 +4,7 @@ import SelectField from "../../../components/input-fields/select-field";
 import { useBudgetStore } from "../store";
 import { BudgetHelper } from "../helper";
 import { useParams } from "react-router-dom";
+import { useStatisticsStore } from "../../../components/stats/store";
 const UpdateBudget = () => {
   const { id } = useParams();
   // classes
@@ -18,6 +19,8 @@ const UpdateBudget = () => {
     setBudgetDataError: setError,
     setBudgets,
   } = useBudgetStore(); // Destructure values from useBudgetStore store
+  const { setSummary } = useStatisticsStore(); // Destructure values from useStatisticsStore store
+
   // handlers
   const getBudget = useCallback(
     (id: string) => {
@@ -39,7 +42,7 @@ const UpdateBudget = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    budgetClass.updateBudget(data, setBudgets, setError); // Call the updateBudget method of the BudgetHelper class with the data object as a parameter
+    budgetClass.updateBudget(data, setBudgets, setError, setSummary); // Call the updateBudget method of the BudgetHelper class with the data object as a parameter
   };
   useEffect(() => {
     if (id) getBudget(id);
