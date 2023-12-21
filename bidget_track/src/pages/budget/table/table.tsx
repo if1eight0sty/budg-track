@@ -7,8 +7,10 @@ import { IBudgetData } from "../interface";
 import { useSearchStore } from "../../home/search/store";
 import DeleteModal from "./components/delete-modal";
 import { useBudgetStore } from "../store";
+import { useNavigate } from "react-router-dom";
 
 const Table = () => {
+  const navigate = useNavigate();
   // classes
   const budgetClass = useMemo(() => new BudgetHelper(), []);
   // stores
@@ -33,6 +35,7 @@ const Table = () => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<IBudgetData>({} as IBudgetData);
 
+  // handlers
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -44,6 +47,9 @@ const Table = () => {
   const handleDeleteClick = (data: IBudgetData) => {
     setData(data);
     handleClickOpen();
+  };
+  const handleUpdateClick = async (id: string) => {
+    navigate(`update-budget/${id}`);
   };
   const getBudgets = useCallback(() => {
     const data = budgetClass.getBudgets();
@@ -116,7 +122,10 @@ const Table = () => {
                   </button>
 
                   {/* Edit details button */}
-                  <button title={`Edit details of ${item.name}`}>
+                  <button
+                    title={`Edit details of ${item.name}`}
+                    onClick={() => handleUpdateClick(item.id)}
+                  >
                     <Icon icon="pixelarticons:edit" width={20} />
                   </button>
 

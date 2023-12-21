@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import InputFieldNoIcon from "../../../components/input-fields/input-field-no-icon";
 import SelectField from "../../../components/input-fields/select-field";
 import { useBudgetStore } from "../store";
 import { BudgetHelper } from "../helper";
-import { v4 as uuidv4 } from "uuid";
-const AddBudget = () => {
+import { useParams } from "react-router-dom";
+const UpdateBudget = () => {
+  const { id } = useParams();
   // classes
   const budgetClass = useMemo(() => new BudgetHelper(), []); // Create an instance of BudgetHelper class using useMemo hook
 
@@ -12,13 +13,21 @@ const AddBudget = () => {
   const {
     budgetData: data,
     setBudgetData: setData,
-    clearBudgetData: clearData,
     budgetDataError: error,
+    clearBudgetData: clearData,
     setBudgetDataError: setError,
     setBudgets,
   } = useBudgetStore(); // Destructure values from useBudgetStore store
+  // handlers
+  const getBudget = useCallback(
+    (id: string) => {
+      const budget = budgetClass.getBudgetById(id);
+      if (budget) setData(budget); // If the budget is found, set the data to the budget object
+    },
+    [budgetClass, setData]
+  );
 
-  // handlers for input change event
+  // handlers for input field change event
   const handleOnChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -30,13 +39,14 @@ const AddBudget = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    budgetClass.addBudget(
-      { ...data, id: uuidv4() },
-      setError,
-      clearData,
-      setBudgets
-    ); // Call the addBudget method of BudgetHelper class with data, setError, and clearData as arguments
+    budgetClass.updateBudget(data, setBudgets, setError); // Call the updateBudget method of the BudgetHelper class with the data object as a parameter
   };
+  useEffect(() => {
+    if (id) getBudget(id);
+    return () => {
+      clearData();
+    };
+  }, [id, getBudget, clearData]);
 
   return (
     <>
@@ -45,7 +55,9 @@ const AddBudget = () => {
           <section className="relative">
             <form className="flex items-center justify-center w-full">
               <div className="flex flex-col items-center px-4 py-4 w-[20em] min-[500px]:w-[25em] min-[650px]:w-[27em]">
-                <h1 className="mb-8 text-2xl font-bold text-gray-600">Add</h1>
+                <h1 className="mb-8 text-2xl font-bold text-gray-600">
+                  Update
+                </h1>
                 <div className="flex flex-col w-full gap-y-4">
                   {/* Input field for name */}
                   <InputFieldNoIcon
@@ -144,4 +156,4 @@ const AddBudget = () => {
   );
 };
 
-export default AddBudget;
+export default UpdateBudget;

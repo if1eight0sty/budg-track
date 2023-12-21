@@ -10,13 +10,7 @@ export class BudgetHelper {
     errors.recurring = data.recurring ? "" : "Recurring is required";
     return errors;
   };
-  addBudget = (
-    data: IBudgetData,
-    setError: (data: IBudgetDataError) => void,
-    clearData: () => void,
-    setBudgets: (data: IBudgetData[]) => void
-  ) => {
-    const errors = this.checkBudgetData(data);
+  checkErrors = (errors: IBudgetDataError) => {
     if (
       errors?.amount ||
       errors?.date ||
@@ -24,6 +18,18 @@ export class BudgetHelper {
       errors?.recurring ||
       errors?.type
     ) {
+      return true;
+    }
+    return false;
+  };
+  addBudget = (
+    data: IBudgetData,
+    setError: (data: IBudgetDataError) => void,
+    clearData: () => void,
+    setBudgets: (data: IBudgetData[]) => void
+  ) => {
+    const errors = this.checkBudgetData(data);
+    if (this.checkErrors(errors)) {
       setError(errors);
       return;
     }
@@ -60,5 +66,32 @@ export class BudgetHelper {
     );
     localStorage.setItem("budgets", JSON.stringify(budgets));
     setBudgets(budgets);
+  };
+  getBudgetById = (id: string) => {
+    const budgets: IBudgetData[] = this.getBudgets();
+    return budgets.find((budget: IBudgetData) => budget.id === id);
+  };
+  updateBudget = (
+    data: IBudgetData,
+    setBudgets: (data: IBudgetData[]) => void,
+    setError: (data: IBudgetDataError) => void
+  ) => {
+    const errors = this.checkBudgetData(data);
+    if (this.checkErrors(errors)) {
+      setError(errors);
+      return;
+    }
+    setError({} as IBudgetDataError);
+    const id = data?.id;
+    const budget = this.getBudgetById(id);
+    if (!budget) return;
+    const budgets: IBudgetData[] = this.getBudgets();
+    budgets.splice(
+      budgets.findIndex((budget: IBudgetData) => budget.id === id),
+      1,
+      { ...budget, ...data }
+    );
+    setBudgets(budgets);
+    localStorage.setItem("budgets", JSON.stringify(budgets));
   };
 }
