@@ -15,11 +15,7 @@ const Table = () => {
   const budgetClass = useMemo(() => new BudgetHelper(), []);
   // stores
   const { budgets, setBudgets } = useBudgetStore();
-  const {
-    search,
-    filters,
-    //  dateRange
-  } = useSearchStore();
+  const { search, filters, dateRange } = useSearchStore();
 
   // states
   // filter states
@@ -27,7 +23,7 @@ const Table = () => {
 
   // pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 5; // number of data shown in one page at a time
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
@@ -36,27 +32,31 @@ const Table = () => {
   const [data, setData] = useState<IBudgetData>({} as IBudgetData);
 
   // handlers
+  // model handlers
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
+  // delete handler
+  // deletes the data from the budget store and open the model that actually deletes the entry
   const handleDeleteClick = (data: IBudgetData) => {
     setData(data);
     handleClickOpen();
   };
+  // update handler
+  // navigates to a form page to update the data
   const handleUpdateClick = async (id: string) => {
     navigate(`update-budget/${id}`);
   };
+  // get budgets from the budget store
   const getBudgets = useCallback(() => {
     const data = budgetClass.getBudgets();
     setBudgets(data);
     return data;
   }, [budgetClass, setBudgets]);
-  // searching data based on search
+  // searching data based on search -> name, type, recurring and amount
   useEffect(() => {
     if (!search) {
       setFilteredData(budgets);
@@ -67,7 +67,8 @@ const Table = () => {
         (item: IBudgetData) =>
           item.name.toLowerCase().includes(search.toLowerCase()) ||
           item.type.toLowerCase().includes(search.toLowerCase()) ||
-          item.recurring.toLowerCase().includes(search.toLowerCase())
+          item.recurring.toLowerCase().includes(search.toLowerCase()) ||
+          item.amount.toString().includes(search)
       )
     );
   }, [search, budgets]);
@@ -88,6 +89,40 @@ const Table = () => {
       )
     );
   }, [filters, budgets]);
+  // filtering data based on date range
+  useEffect(() => {
+    if (!dateRange.from && !dateRange.to) {
+      setFilteredData(budgets);
+      return;
+    }
+    // filter start date is only given
+    if (dateRange?.from && !dateRange?.to) {
+      setFilteredData(
+        budgets?.filter(
+          (item: IBudgetData) =>
+            new Date(item.date) >= new Date(dateRange?.from)
+        )
+      );
+      return;
+    }
+    // filter end date is only given
+    if (!dateRange?.from && dateRange?.to) {
+      setFilteredData(
+        budgets?.filter(
+          (item: IBudgetData) => new Date(item.date) <= new Date(dateRange?.to)
+        )
+      );
+      return;
+    }
+    // both filter dates are given
+    setFilteredData(
+      budgets?.filter(
+        (item: IBudgetData) =>
+          new Date(item.date) >= new Date(dateRange?.from) &&
+          new Date(item.date) <= new Date(dateRange?.to)
+      )
+    );
+  }, [dateRange, budgets]);
   useEffect(() => {
     getBudgets();
   }, [getBudgets]);
