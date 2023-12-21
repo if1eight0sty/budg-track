@@ -1,14 +1,15 @@
+// Interface for managing login data
 export interface IUseAuthStore {
-  loginData: ILoginData;
-  setLoginData: (data: ILoginData) => void;
-  clearLoginData: () => void;
-  loginDataError: ILoginDataError;
-  setLoginDataError: (data: ILoginDataError) => void;
-  registerData: IRegisterData;
-  setRegisterData: (data: IRegisterData) => void;
-  clearRegisterData: () => void;
-  registerDataError: IRegisterDataError;
-  setRegisterDataError: (data: IRegisterDataError) => void;
+  loginData: ILoginData; // Holds login data
+  setLoginData: (data: ILoginData) => void; // Sets login data
+  clearLoginData: () => void; // Clears login data
+  loginDataError: ILoginDataError; // Holds login data errors
+  setLoginDataError: (data: ILoginDataError) => void; // Sets login data errors
+  registerData: IRegisterData; // Holds register data
+  setRegisterData: (data: IRegisterData) => void; // Sets register data
+  clearRegisterData: () => void; // Clears register data
+  registerDataError: IRegisterDataError; // Holds register data errors
+  setRegisterDataError: (data: IRegisterDataError) => void; // Sets register data errors
 }
 
 export interface ILoginData {

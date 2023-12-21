@@ -14,8 +14,8 @@ const Table = () => {
   // classes
   const budgetClass = useMemo(() => new BudgetHelper(), []);
   // stores
-  const { budgets, setBudgets } = useBudgetStore();
-  const { search, filters, dateRange } = useSearchStore();
+  const { budgets, setBudgets } = useBudgetStore(); // budgets store
+  const { search, filters, dateRange } = useSearchStore(); // search store -> states for search and filter
 
   // states
   // filter states
@@ -50,18 +50,21 @@ const Table = () => {
   const handleUpdateClick = async (id: string) => {
     navigate(`update-budget/${id}`);
   };
-  // get budgets from the budget store
+  // get budgets
   const getBudgets = useCallback(() => {
+    // get budgets from the budget store
     const data = budgetClass.getBudgets();
     setBudgets(data);
     return data;
   }, [budgetClass, setBudgets]);
   // searching data based on search -> name, type, recurring and amount
   useEffect(() => {
+    // if no search is given then set filtered data to budgets
     if (!search) {
       setFilteredData(budgets);
       return;
     }
+    // if search is given then filter the data and set it to filtered data
     setFilteredData(
       budgets?.filter(
         (item: IBudgetData) =>
@@ -75,10 +78,12 @@ const Table = () => {
 
   // filtering data based on filters i.e type and recurring
   useEffect(() => {
+    // if no filter is given then set filtered data to budgets
     if (!filters.type && !filters.recurring) {
       setFilteredData(budgets);
       return;
     }
+    // if only type filter is given then filter data based on type
     setFilteredData(
       budgets?.filter(
         (item: IBudgetData) =>
@@ -91,11 +96,12 @@ const Table = () => {
   }, [filters, budgets]);
   // filtering data based on date range
   useEffect(() => {
+    // if no date range is given then set filtered data to budgets
     if (!dateRange.from && !dateRange.to) {
       setFilteredData(budgets);
       return;
     }
-    // filter start date is only given
+    // if only from date is given then filter data based on from date
     if (dateRange?.from && !dateRange?.to) {
       setFilteredData(
         budgets?.filter(
@@ -105,7 +111,7 @@ const Table = () => {
       );
       return;
     }
-    // filter end date is only given
+    // if only to date is given then filter data based on to date
     if (!dateRange?.from && dateRange?.to) {
       setFilteredData(
         budgets?.filter(
@@ -114,7 +120,7 @@ const Table = () => {
       );
       return;
     }
-    // both filter dates are given
+    // if both from and to date is given then filter data based on from and to date
     setFilteredData(
       budgets?.filter(
         (item: IBudgetData) =>
@@ -123,6 +129,7 @@ const Table = () => {
       )
     );
   }, [dateRange, budgets]);
+  // get budgets on component mount
   useEffect(() => {
     getBudgets();
   }, [getBudgets]);
