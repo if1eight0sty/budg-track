@@ -11,7 +11,7 @@ const StatCard = ({ value, title }: IStatCard) => {
           <dd className="mt-1 text-[#2e2e2e]/70">
             <span className="mr-2 text-xl">NRs</span>
             <span className="text-3xl font-semibold text-[#2e2e2e]/60">
-              {value}
+              {isNaN(value) ? 0 : Number(value).toFixed(2)}
             </span>
           </dd>
         </div>

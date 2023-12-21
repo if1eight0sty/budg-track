@@ -94,4 +94,23 @@ export class BudgetHelper {
     setBudgets(budgets);
     localStorage.setItem("budgets", JSON.stringify(budgets));
   };
+  getSummaryStatistics = () => {
+    const summary = {
+      total: 0,
+      income: 0,
+      expense: 0,
+      balance: 0,
+    };
+    const budgets: IBudgetData[] = this.getBudgets();
+    budgets.forEach((budget: IBudgetData) => {
+      summary.total += budget.amount;
+      if (budget.type === "income") {
+        summary.income += budget.amount;
+      } else {
+        summary.expense += budget.amount;
+      }
+    });
+    summary.balance = summary.income - summary.expense;
+    return summary;
+  };
 }
